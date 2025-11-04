@@ -83,7 +83,69 @@ router.get('/all', async (req, res) => {
   }
 });
 
-// Apply schedule template to employee
+// Apply schedule template to employee (simplified endpoint)
+router.post('/apply-template', async (req, res) => {
+  try {
+    const { employeeId, templateId } = req.body;
+    
+    if (!employeeId || !templateId) {
+      return res.status(400).json({ error: 'employeeId and templateId are required' });
+    }
+    
+    // Verify employee exists
+    const employee = await Employee.findByPk(employeeId);
+    if (!employee) {
+      return res.status(404).json({ error: 'Employee not found' });
+    }
+    
+    // Verify template exists and is active
+    const template = await ScheduleTemplate.findOne({
+      where: { id: templateId, isActive: true },
+      include: [{
+        model: ScheduleTemplateDay,
+        as: 'templateDays'
+      }]
+    });
+    
+    if (!template) {
+      return res.status(404).json({ error: 'Template not found or inactive' });
+    }
+    
+    // Delete existing schedules for this employee
+    await Schedule.destroy({ where: { employeeId } });
+    
+    // Create new schedules based on template
+    const createdSchedules = [];
+    for (const templateDay of template.templateDays) {
+      const newSchedule = await Schedule.create({
+        employeeId,
+        templateId: template.id,
+        dayOfWeek: templateDay.dayOfWeek,
+        startTime: templateDay.startTime,
+        endTime: templateDay.endTime,
+        breakStartTime: templateDay.breakStartTime,
+        breakEndTime: templateDay.breakEndTime,
+        isWorkingDay: templateDay.isWorkingDay,
+        notes: templateDay.notes
+      });
+      createdSchedules.push(newSchedule);
+    }
+    
+    res.status(201).json({
+      message: `Template "${template.name}" applied successfully to ${employee.name}`,
+      schedules: createdSchedules,
+      template: {
+        id: template.id,
+        name: template.name
+      }
+    });
+  } catch (error) {
+    console.error('Apply template error:', error);
+    res.status(500).json({ error: 'Server error applying template' });
+  }
+});
+
+// Apply schedule template to employee (legacy endpoint)
 router.post('/employee/:employeeId/apply-template', async (req, res) => {
   try {
     const { employeeId } = req.params;

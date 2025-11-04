@@ -4,6 +4,45 @@ import { Employee, WeeklySchedule, ScheduleTemplate, ScheduleTemplateDay, DailyS
 
 const router = express.Router();
 
+// Get all weekly schedules for an employee (all years)
+router.get('/employee/:employeeId', async (req, res) => {
+  try {
+    const { employeeId } = req.params;
+    
+    // Verify employee exists
+    const employee = await Employee.findByPk(employeeId);
+    if (!employee) {
+      return res.status(404).json({ error: 'Employee not found' });
+    }
+    
+    const weeklySchedules = await WeeklySchedule.findAll({
+      where: { employeeId },
+      include: [
+        {
+          model: ScheduleTemplate,
+          as: 'template',
+          include: [{
+            model: ScheduleTemplateDay,
+            as: 'templateDays',
+            order: [['dayOfWeek', 'ASC']]
+          }]
+        },
+        {
+          model: Employee,
+          as: 'creator',
+          attributes: ['id', 'name', 'employeeCode']
+        }
+      ],
+      order: [['year', 'DESC'], ['weekNumber', 'DESC']]
+    });
+    
+    res.json({ data: weeklySchedules });
+  } catch (error) {
+    console.error('Get weekly schedules error:', error);
+    res.status(500).json({ error: 'Server error fetching weekly schedules' });
+  }
+});
+
 // Get weekly schedules for an employee in a specific year
 router.get('/employee/:employeeId/year/:year', async (req, res) => {
   try {
@@ -107,6 +146,100 @@ router.get('/employee/:employeeId/week/:year/:weekNumber', async (req, res) => {
   } catch (error) {
     console.error('Get weekly schedule error:', error);
     res.status(500).json({ error: 'Server error fetching weekly schedule' });
+  }
+});
+
+// Create weekly schedule (simple endpoint)
+router.post('/', async (req, res) => {
+  try {
+    const { employeeId, templateId, weekStart, weekEnd, year, weekNumber, notes, createdBy } = req.body;
+    
+    // Validate required fields
+    if (!employeeId || !year || !weekNumber) {
+      return res.status(400).json({ 
+        error: 'employeeId, year, and weekNumber are required' 
+      });
+    }
+    
+    // Verify employee exists
+    const employee = await Employee.findByPk(employeeId);
+    if (!employee) {
+      return res.status(404).json({ error: 'Employee not found' });
+    }
+    
+    // Verify template exists if provided
+    if (templateId) {
+      const template = await ScheduleTemplate.findOne({
+        where: { id: templateId, isActive: true }
+      });
+      if (!template) {
+        return res.status(404).json({ error: 'Template not found or inactive' });
+      }
+    }
+    
+    // Calculate week dates if not provided
+    let startDate = weekStart;
+    let endDate = weekEnd;
+    if (!startDate || !endDate) {
+      const dates = WeeklySchedule.getWeekDates(year, weekNumber);
+      startDate = dates.startDate;
+      endDate = dates.endDate;
+    }
+    
+    // Check if weekly schedule already exists
+    let weeklySchedule = await WeeklySchedule.findOne({
+      where: { employeeId, year, weekNumber }
+    });
+    
+    if (weeklySchedule) {
+      // Update existing
+      await weeklySchedule.update({
+        templateId,
+        startDate,
+        endDate,
+        notes
+      });
+    } else {
+      // Create new
+      weeklySchedule = await WeeklySchedule.create({
+        employeeId,
+        year,
+        weekNumber,
+        templateId,
+        startDate,
+        endDate,
+        notes,
+        createdBy: createdBy || employeeId
+      });
+    }
+    
+    // Fetch complete weekly schedule with relations
+    const completeWeeklySchedule = await WeeklySchedule.findByPk(weeklySchedule.id, {
+      include: [
+        {
+          model: ScheduleTemplate,
+          as: 'template',
+          include: [{
+            model: ScheduleTemplateDay,
+            as: 'templateDays',
+            order: [['dayOfWeek', 'ASC']]
+          }]
+        },
+        {
+          model: Employee,
+          as: 'creator',
+          attributes: ['id', 'name', 'employeeCode']
+        }
+      ]
+    });
+    
+    res.status(201).json({
+      message: `Weekly schedule for week ${weekNumber}/${year} ${weeklySchedule.createdAt.getTime() === weeklySchedule.updatedAt.getTime() ? 'created' : 'updated'} successfully`,
+      data: completeWeeklySchedule
+    });
+  } catch (error) {
+    console.error('Create weekly schedule error:', error);
+    res.status(500).json({ error: 'Server error creating weekly schedule' });
   }
 });
 
@@ -395,6 +528,28 @@ router.post('/employee/:employeeId/copy-template', async (req, res) => {
   } catch (error) {
     console.error('Copy template error:', error);
     res.status(500).json({ error: 'Server error copying template to weeks' });
+  }
+});
+
+// Delete weekly schedule by ID
+router.delete('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    const weeklySchedule = await WeeklySchedule.findByPk(id);
+    
+    if (!weeklySchedule) {
+      return res.status(404).json({ error: 'Weekly schedule not found' });
+    }
+    
+    await weeklySchedule.destroy();
+    
+    res.json({ 
+      message: `Weekly schedule deleted successfully` 
+    });
+  } catch (error) {
+    console.error('Delete weekly schedule error:', error);
+    res.status(500).json({ error: 'Server error deleting weekly schedule' });
   }
 });
 

@@ -1,24 +1,15 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/database.js';
 
-export const Schedule = sequelize.define('Schedule', {
+export const ScheduleTemplateDay = sequelize.define('ScheduleTemplateDay', {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true
   },
-  employeeId: {
-    type: DataTypes.UUID,
-    allowNull: false,
-    field: 'employee_id',
-    references: {
-      model: 'employees',
-      key: 'id'
-    }
-  },
   templateId: {
     type: DataTypes.UUID,
-    allowNull: true,
+    allowNull: false,
     field: 'template_id',
     references: {
       model: 'schedule_templates',
@@ -64,23 +55,26 @@ export const Schedule = sequelize.define('Schedule', {
     allowNull: true
   }
 }, {
-  tableName: 'schedules',
+  tableName: 'schedule_template_days',
   timestamps: true,
   createdAt: 'created_at',
   updatedAt: 'updated_at',
   indexes: [
     {
-      fields: ['employee_id', 'day_of_week'],
+      fields: ['template_id', 'day_of_week'],
       unique: true
     },
     {
       fields: ['day_of_week']
+    },
+    {
+      fields: ['template_id']
     }
   ]
 });
 
 // Instance methods
-Schedule.prototype.isWithinWorkingHours = function(time) {
+ScheduleTemplateDay.prototype.isWithinWorkingHours = function(time) {
   if (!this.isWorkingDay) return false;
   
   const checkTime = new Date(`1970-01-01T${time}`);
@@ -90,7 +84,7 @@ Schedule.prototype.isWithinWorkingHours = function(time) {
   return checkTime >= startTime && checkTime <= endTime;
 };
 
-Schedule.prototype.isWithinBreakTime = function(time) {
+ScheduleTemplateDay.prototype.isWithinBreakTime = function(time) {
   if (!this.breakStartTime || !this.breakEndTime) return false;
   
   const checkTime = new Date(`1970-01-01T${time}`);
@@ -101,7 +95,7 @@ Schedule.prototype.isWithinBreakTime = function(time) {
 };
 
 // Static method to get day name
-Schedule.getDayName = function(dayOfWeek) {
+ScheduleTemplateDay.getDayName = function(dayOfWeek) {
   const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
   return days[dayOfWeek] || 'Desconocido';
 };

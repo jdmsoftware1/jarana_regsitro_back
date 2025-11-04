@@ -1,6 +1,9 @@
 import { Employee } from './Employee.js';
 import { Record } from './Record.js';
 import { Schedule } from './Schedule.js';
+import { ScheduleTemplate } from './ScheduleTemplate.js';
+import { ScheduleTemplateDay } from './ScheduleTemplateDay.js';
+import { TimeRecord } from './TimeRecord.js';
 import { Vacation } from './Vacation.js';
 
 // Define associations
@@ -39,4 +42,36 @@ Vacation.belongsTo(Employee, {
   as: 'approver'
 });
 
-export { Employee, Record, Schedule, Vacation };
+// Schedule Template associations
+Employee.hasMany(ScheduleTemplate, {
+  foreignKey: 'createdBy',
+  as: 'createdTemplates'
+});
+
+ScheduleTemplate.belongsTo(Employee, {
+  foreignKey: 'createdBy',
+  as: 'creator'
+});
+
+ScheduleTemplate.hasMany(ScheduleTemplateDay, {
+  foreignKey: 'templateId',
+  as: 'templateDays'
+});
+
+ScheduleTemplateDay.belongsTo(ScheduleTemplate, {
+  foreignKey: 'templateId',
+  as: 'template'
+});
+
+// Schedule to Template association
+Schedule.belongsTo(ScheduleTemplate, {
+  foreignKey: 'templateId',
+  as: 'template'
+});
+
+ScheduleTemplate.hasMany(Schedule, {
+  foreignKey: 'templateId',
+  as: 'schedules'
+});
+
+export { Employee, Record, Schedule, ScheduleTemplate, ScheduleTemplateDay, Vacation };

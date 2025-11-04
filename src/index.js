@@ -11,6 +11,7 @@ import recordRoutes from './routes/records.js';
 import adminRoutes from './routes/admin.js';
 import kioskRoutes from './routes/kiosk.js';
 import scheduleRoutes from './routes/schedules.js';
+import scheduleTemplateRoutes from './routes/scheduleTemplates.js';
 import vacationRoutes from './routes/vacations.js';
 import aiRoutes from './routes/ai.js';
 
@@ -61,6 +62,7 @@ app.use('/api/records', recordRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/kiosk', kioskRoutes);
 app.use('/api/schedules', scheduleRoutes);
+app.use('/api/schedule-templates', scheduleTemplateRoutes);
 app.use('/api/vacations', vacationRoutes);
 app.use('/api/ai', aiRoutes);
 

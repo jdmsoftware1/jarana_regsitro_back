@@ -15,6 +15,8 @@ import scheduleTemplateRoutes from './routes/scheduleTemplates.js';
 import weeklyScheduleRoutes from './routes/weeklySchedules.js';
 import dailyExceptionRoutes from './routes/dailyExceptions.js';
 import advancedSchedulingRoutes from './routes/advancedScheduling.js';
+import scheduleBreakRoutes from './routes/scheduleBreaks.js';
+import advancedBreakRoutes from './routes/advancedBreaks.js';
 import vacationRoutes from './routes/vacations.js';
 import aiRoutes from './routes/ai.js';
 
@@ -69,6 +71,8 @@ app.use('/api/schedule-templates', scheduleTemplateRoutes);
 app.use('/api/weekly-schedules', weeklyScheduleRoutes);
 app.use('/api/daily-exceptions', dailyExceptionRoutes);
 app.use('/api/advanced-scheduling', advancedSchedulingRoutes);
+app.use('/api/schedule-breaks', scheduleBreakRoutes);
+app.use('/api/advanced-breaks', advancedBreakRoutes);
 app.use('/api/vacations', vacationRoutes);
 app.use('/api/ai', aiRoutes);
 

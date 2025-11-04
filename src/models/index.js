@@ -5,6 +5,7 @@ import { ScheduleTemplate } from './ScheduleTemplate.js';
 import { ScheduleTemplateDay } from './ScheduleTemplateDay.js';
 import { WeeklySchedule } from './WeeklySchedule.js';
 import { DailyScheduleException } from './DailyScheduleException.js';
+import { ScheduleBreak } from './ScheduleBreak.js';
 import { TimeRecord } from './TimeRecord.js';
 import { Vacation } from './Vacation.js';
 
@@ -138,4 +139,18 @@ Employee.hasMany(DailyScheduleException, {
   as: 'approvedExceptions'
 });
 
-export { Employee, Record, Schedule, ScheduleTemplate, ScheduleTemplateDay, WeeklySchedule, DailyScheduleException, Vacation };
+// Schedule Break associations
+Employee.hasMany(ScheduleBreak, {
+  foreignKey: 'createdBy',
+  as: 'createdBreaks'
+});
+
+ScheduleBreak.belongsTo(Employee, {
+  foreignKey: 'createdBy',
+  as: 'creator'
+});
+
+// Note: ScheduleBreak uses polymorphic associations via parentType/parentId
+// The actual relationships are handled in the service layer
+
+export { Employee, Record, Schedule, ScheduleTemplate, ScheduleTemplateDay, WeeklySchedule, DailyScheduleException, ScheduleBreak, Vacation };

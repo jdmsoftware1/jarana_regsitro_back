@@ -24,8 +24,8 @@ export const loginRateLimit = createRateLimiter(
 );
 
 export const adminRateLimit = createRateLimiter(
-  15 * 60 * 1000, // 15 minutos
-  100, // 100 requests
+  1 * 60 * 1000, // 1 minuto
+  500, // 500 requests por minuto
   'Límite de requests de admin excedido.'
 );
 

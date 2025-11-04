@@ -3,6 +3,8 @@ import { Record } from './Record.js';
 import { Schedule } from './Schedule.js';
 import { ScheduleTemplate } from './ScheduleTemplate.js';
 import { ScheduleTemplateDay } from './ScheduleTemplateDay.js';
+import { WeeklySchedule } from './WeeklySchedule.js';
+import { DailyScheduleException } from './DailyScheduleException.js';
 import { TimeRecord } from './TimeRecord.js';
 import { Vacation } from './Vacation.js';
 
@@ -74,4 +76,66 @@ ScheduleTemplate.hasMany(Schedule, {
   as: 'schedules'
 });
 
-export { Employee, Record, Schedule, ScheduleTemplate, ScheduleTemplateDay, Vacation };
+// Weekly Schedule associations
+Employee.hasMany(WeeklySchedule, {
+  foreignKey: 'employeeId',
+  as: 'weeklySchedules'
+});
+
+WeeklySchedule.belongsTo(Employee, {
+  foreignKey: 'employeeId',
+  as: 'employee'
+});
+
+WeeklySchedule.belongsTo(ScheduleTemplate, {
+  foreignKey: 'templateId',
+  as: 'template'
+});
+
+ScheduleTemplate.hasMany(WeeklySchedule, {
+  foreignKey: 'templateId',
+  as: 'weeklySchedules'
+});
+
+WeeklySchedule.belongsTo(Employee, {
+  foreignKey: 'createdBy',
+  as: 'creator'
+});
+
+Employee.hasMany(WeeklySchedule, {
+  foreignKey: 'createdBy',
+  as: 'createdWeeklySchedules'
+});
+
+// Daily Schedule Exception associations
+Employee.hasMany(DailyScheduleException, {
+  foreignKey: 'employeeId',
+  as: 'scheduleExceptions'
+});
+
+DailyScheduleException.belongsTo(Employee, {
+  foreignKey: 'employeeId',
+  as: 'employee'
+});
+
+DailyScheduleException.belongsTo(Employee, {
+  foreignKey: 'createdBy',
+  as: 'creator'
+});
+
+Employee.hasMany(DailyScheduleException, {
+  foreignKey: 'createdBy',
+  as: 'createdExceptions'
+});
+
+DailyScheduleException.belongsTo(Employee, {
+  foreignKey: 'approvedBy',
+  as: 'approver'
+});
+
+Employee.hasMany(DailyScheduleException, {
+  foreignKey: 'approvedBy',
+  as: 'approvedExceptions'
+});
+
+export { Employee, Record, Schedule, ScheduleTemplate, ScheduleTemplateDay, WeeklySchedule, DailyScheduleException, Vacation };

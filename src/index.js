@@ -12,6 +12,9 @@ import adminRoutes from './routes/admin.js';
 import kioskRoutes from './routes/kiosk.js';
 import scheduleRoutes from './routes/schedules.js';
 import scheduleTemplateRoutes from './routes/scheduleTemplates.js';
+import weeklyScheduleRoutes from './routes/weeklySchedules.js';
+import dailyExceptionRoutes from './routes/dailyExceptions.js';
+import advancedSchedulingRoutes from './routes/advancedScheduling.js';
 import vacationRoutes from './routes/vacations.js';
 import aiRoutes from './routes/ai.js';
 
@@ -63,6 +66,9 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/kiosk', kioskRoutes);
 app.use('/api/schedules', scheduleRoutes);
 app.use('/api/schedule-templates', scheduleTemplateRoutes);
+app.use('/api/weekly-schedules', weeklyScheduleRoutes);
+app.use('/api/daily-exceptions', dailyExceptionRoutes);
+app.use('/api/advanced-scheduling', advancedSchedulingRoutes);
 app.use('/api/vacations', vacationRoutes);
 app.use('/api/ai', aiRoutes);
 

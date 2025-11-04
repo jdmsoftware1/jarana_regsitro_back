@@ -6,7 +6,6 @@ import { ScheduleTemplateDay } from './ScheduleTemplateDay.js';
 import { WeeklySchedule } from './WeeklySchedule.js';
 import { DailyScheduleException } from './DailyScheduleException.js';
 import { ScheduleBreak } from './ScheduleBreak.js';
-import { TimeRecord } from './TimeRecord.js';
 import { Vacation } from './Vacation.js';
 
 // Define associations

@@ -1,6 +1,6 @@
 // Servicio para gestión avanzada de pausas de horarios
 import { Op } from 'sequelize';
-import { ScheduleBreak, Schedule, ScheduleTemplateDay, DailyScheduleException, Employee } from '../models/index.js';
+import { ScheduleBreak, Schedule, ScheduleTemplate, ScheduleTemplateDay, DailyScheduleException, Employee } from '../models/index.js';
 import sequelize from '../config/database.js';
 
 export class ScheduleBreakService {

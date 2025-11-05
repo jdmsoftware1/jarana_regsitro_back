@@ -1,0 +1,87 @@
+# Sistema de Gestión de Empleados JARANA
+
+## Descripción General
+JARANA es un sistema completo de gestión de empleados que incluye control de asistencia, gestión de horarios, vacaciones y reportes.
+
+## Funcionalidades Principales
+
+### 1. Gestión de Empleados
+- Registro de empleados con información personal
+- Códigos de empleado únicos
+- Autenticación por PIN de 4 dígitos
+- Roles: admin y employee
+- Estado activo/inactivo
+
+### 2. Control de Asistencia
+- Registro de entradas y salidas
+- Múltiples registros por día
+- Geolocalización opcional
+- Dispositivo de registro
+- Notas en cada registro
+
+### 3. Horarios
+- Horarios base por empleado
+- Plantillas de horarios reutilizables
+- Horarios semanales (diferentes cada semana)
+- Horarios personalizados por día
+- Múltiples pausas configurables
+
+### 4. Vacaciones
+- Solicitud de vacaciones
+- Aprobación por administrador
+- Estados: pending, approved, rejected
+- Tipos: vacation, sick_leave, personal
+- Integración con vista semanal
+
+### 5. Reportes
+- Informe de cumplimiento
+- Detección de llegadas tarde
+- Detección de salidas anticipadas
+- Estadísticas de asistencia
+- Análisis de patrones con IA
+
+## Reglas de Negocio
+
+### Horarios
+- Un empleado puede tener un horario base
+- Puede tener diferentes horarios por semana
+- Prioridad: Vacaciones > Horario Semanal > Horario Base
+- Las pausas se restan del tiempo trabajado
+
+### Llegadas Tarde
+- Se considera tarde si llega después de la hora de inicio del horario
+- Margen de tolerancia configurable
+- Se registra en el informe de cumplimiento
+
+### Vacaciones
+- Deben ser aprobadas por un administrador
+- No se pueden solapar vacaciones del mismo empleado
+- Durante vacaciones no se esperan registros de asistencia
+
+## Endpoints API Principales
+
+### Empleados
+- GET /api/employees - Listar empleados
+- POST /api/employees - Crear empleado
+- PUT /api/employees/:id - Actualizar empleado
+- DELETE /api/employees/:id - Eliminar empleado
+
+### Registros
+- GET /api/records - Listar registros
+- POST /api/records - Crear registro
+- GET /api/records/employee/:id - Registros de un empleado
+
+### Horarios
+- GET /api/schedules - Listar horarios
+- POST /api/schedules - Crear horario
+- GET /api/schedule-templates - Plantillas de horarios
+- POST /api/weekly-schedules - Horarios semanales
+
+### Vacaciones
+- GET /api/vacations - Listar vacaciones
+- POST /api/vacations - Solicitar vacaciones
+- PUT /api/vacations/:id/approve - Aprobar vacaciones
+- PUT /api/vacations/:id/reject - Rechazar vacaciones
+
+## Versión Actual
+Sistema JARANA v1.0.2 - Noviembre 2025

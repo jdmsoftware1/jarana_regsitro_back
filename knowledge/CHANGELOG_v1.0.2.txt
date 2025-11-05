@@ -1,0 +1,137 @@
+# 📋 Novedades - Sistema JARANA v1.0.2
+
+## Versión 1.0.2 - 05 de Noviembre 2025
+
+### 🎉 ¿Qué hay de nuevo?
+
+#### 1. 🧠 Chat de IA Mejorado
+**¿Qué es?** El asistente de IA ahora es mucho más inteligente y puede responder preguntas sobre cómo usar el sistema.
+
+**¿Qué puede hacer?**
+- Responder preguntas como "¿Cómo apruebo vacaciones?"
+- Explicar paso a paso cualquier funcionalidad
+- Dar rutas específicas (ej: Vacaciones → Botón Aprobar)
+- Consultar datos en tiempo real ("¿Quién llegó tarde hoy?")
+
+**¿Cómo lo uso?**
+- Haz clic en el icono de chat en la esquina inferior derecha
+- Escribe tu pregunta
+- La IA te responderá con instrucciones claras
+
+---
+
+#### 2. 📚 Nueva Sección: Gestión de IA
+**¿Dónde está?** AdminDashboard → Pestaña "Gestión IA" (🧠)
+
+**¿Qué puedo hacer?**
+- ✅ **Subir documentos**: Arrastra archivos .txt con información que quieres que la IA conozca
+- ✅ **Ver documentos**: Consulta qué información tiene la IA
+- ✅ **Eliminar documentos**: Borra documentos que ya no necesites (🗑️)
+- ✅ **Instrucciones personalizadas**: Añade reglas específicas para tu empresa
+- ✅ **Estadísticas**: Ve cuántos documentos están cargados
+
+**Ejemplo de uso:**
+1. Ve a "Gestión IA"
+2. Arrastra un archivo .txt con tus políticas de empresa
+3. Haz clic en "Recargar Base de Conocimiento"
+4. ¡Listo! La IA ya conoce tus políticas
+
+---
+
+#### 3. 📖 Documentación Incluida
+El sistema ya viene con 3 documentos de ayuda:
+- **Sistema JARANA**: Descripción general
+- **Guía de Uso**: Instrucciones paso a paso de todo
+- **Preguntas Frecuentes**: Respuestas a dudas comunes
+
+---
+
+### 🔧 Mejoras y Correcciones
+
+#### ✅ Errores Corregidos
+- **Chat de IA**: Ya no da errores al hacer preguntas
+- **Mensajes de error**: Ahora son más claros y en español
+- **Conexión**: Mejor manejo cuando hay problemas de red
+
+#### ✨ Mejoras de Interfaz
+- Diseño más moderno en la sección de IA
+- Botones más claros y fáciles de usar
+- Mensajes de confirmación antes de borrar
+- Animaciones de carga
+
+---
+
+### 📖 ¿Cómo Empezar?
+
+#### Para Administradores:
+1. **Prueba el Chat de IA**
+   - Haz clic en el icono de chat
+   - Pregunta: "¿Cómo apruebo vacaciones?"
+   - La IA te guiará paso a paso
+
+2. **Personaliza la IA**
+   - Ve a "Gestión IA"
+   - Añade tus propias políticas y procedimientos
+   - La IA aprenderá de tus documentos
+
+3. **Comparte con tu Equipo**
+   - Diles que pueden usar el chat de IA
+   - Ya no necesitan llamarte para preguntas básicas
+
+#### Para Empleados:
+- **Usa el Chat de IA** cuando tengas dudas
+- Pregunta cosas como:
+  - "¿Cómo solicito vacaciones?"
+  - "¿Dónde veo mi horario?"
+  - "¿Cómo registro mi entrada?"
+
+---
+
+### ⚙️ Requisitos Técnicos
+
+**Para usar el Chat de IA necesitas:**
+- Configurar una clave de OpenAI (solo administradores)
+- Conexión a internet
+
+**Navegadores compatibles:**
+- Chrome, Edge, Firefox, Safari (versiones recientes)
+
+---
+
+### 💡 Consejos
+
+1. **Sube tus propios documentos**
+   - Políticas de empresa
+   - Procedimientos internos
+   - Preguntas frecuentes de tu equipo
+
+2. **Usa instrucciones personalizadas**
+   - Añade reglas específicas de tu empresa
+   - Ejemplo: "Las vacaciones se solicitan con 15 días de anticipación"
+
+3. **Recarga después de cambios**
+   - Después de subir documentos, haz clic en "Recargar"
+   - Así la IA aprende los nuevos contenidos
+
+---
+
+### 🆘 ¿Necesitas Ayuda?
+
+- **Usa el Chat de IA**: Pregúntale directamente
+- **Email**: soporte@jarana.com
+- **Documentación**: Revisa los documentos incluidos
+
+---
+
+### 🔜 Próximamente (v1.0.3)
+
+- Editar documentos desde el navegador
+- Historial de conversaciones con la IA
+- Soporte para PDF y Word
+- Sugerencias automáticas de horarios
+
+---
+
+**Versión:** 1.0.2  
+**Fecha:** 05/11/2025  
+**Estado:** ✅ Estable

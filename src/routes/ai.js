@@ -1,7 +1,31 @@
 import express from 'express';
+import multer from 'multer';
 import AIService from '../services/aiService.js';
+import enhancedAIService from '../services/enhancedAIService.js';
+import embeddingService from '../services/embeddingService.js';
 
 const router = express.Router();
+
+// Configurar multer para upload de archivos
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, embeddingService.documentsPath);
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  }
+});
+
+const upload = multer({ 
+  storage: storage,
+  fileFilter: (req, file, cb) => {
+    if (file.originalname.endsWith('.txt')) {
+      cb(null, true);
+    } else {
+      cb(new Error('Solo se permiten archivos .txt'));
+    }
+  }
+});
 
 // Analyze work patterns and detect anomalies
 router.get('/analyze-patterns', async (req, res) => {
@@ -61,25 +85,184 @@ router.get('/anomalies-summary', async (req, res) => {
   }
 });
 
-// Chat assistant endpoint
+// Enhanced chat endpoint with embeddings and database access
 router.post('/chat', async (req, res) => {
   try {
-    const { message, userId, userRole = 'employee' } = req.body;
+    const { message, userId } = req.body;
     
-    if (!message || !userId) {
+    if (!message) {
       return res.status(400).json({ 
-        error: 'Message and userId are required' 
+        error: 'Message is required' 
       });
     }
     
-    const response = await AIService.chatAssistant(message, userId, userRole);
+    // Usar el servicio mejorado de IA
+    const response = await enhancedAIService.chat(message, userId);
     
     res.json(response);
   } catch (error) {
-    console.error('Error in chat assistant:', error);
+    console.error('Error in enhanced chat:', error);
+    
+    // Si es un error de base de datos, usar mensaje amigable
+    if (error.name && error.name.includes('Sequelize')) {
+      return res.status(500).json({ 
+        error: 'Error en el servidor: No se puede procesar la consulta. Por favor, reinicie el sistema o póngase en contacto con el administrador.',
+        type: 'database_error',
+        ...(process.env.NODE_ENV === 'development' && { details: error.message })
+      });
+    }
+    
     res.status(500).json({ 
-      error: 'Error processing chat message',
-      message: error.message 
+      error: 'Error en el servidor: No se puede procesar el mensaje. Por favor, reinicie el sistema o póngase en contacto con el administrador.',
+      type: 'chat_error',
+      ...(process.env.NODE_ENV === 'development' && { details: error.message })
+    });
+  }
+});
+
+// Reload knowledge base
+router.post('/reload-knowledge', async (req, res) => {
+  try {
+    await embeddingService.reloadDocuments();
+    const stats = embeddingService.getStats();
+    
+    res.json({
+      message: 'Knowledge base reloaded successfully',
+      stats
+    });
+  } catch (error) {
+    console.error('Error reloading knowledge:', error);
+    res.status(500).json({ 
+      error: 'Error reloading knowledge base',
+      details: error.message 
+    });
+  }
+});
+
+// Get knowledge base stats
+router.get('/knowledge-stats', async (req, res) => {
+  try {
+    const stats = embeddingService.getStats();
+    res.json(stats);
+  } catch (error) {
+    console.error('Error getting stats:', error);
+    res.status(500).json({ 
+      error: 'Error getting knowledge base stats',
+      details: error.message 
+    });
+  }
+});
+
+// Upload document
+router.post('/upload-document', upload.single('document'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: 'No se proporcionó ningún archivo' });
+    }
+
+    res.json({ 
+      message: 'Documento subido correctamente',
+      filename: req.file.originalname 
+    });
+  } catch (error) {
+    console.error('Error uploading document:', error);
+    res.status(500).json({ 
+      error: 'Error al subir el documento',
+      details: error.message 
+    });
+  }
+});
+
+// View document
+router.get('/view-document/:filename', async (req, res) => {
+  try {
+    const fs = await import('fs/promises');
+    const path = await import('path');
+    const { filename } = req.params;
+
+    const filePath = path.join(embeddingService.documentsPath, filename);
+    const content = await fs.readFile(filePath, 'utf-8');
+
+    res.json({ content });
+  } catch (error) {
+    console.error('Error viewing document:', error);
+    res.status(500).json({ 
+      error: 'Error viewing document',
+      details: error.message 
+    });
+  }
+});
+
+// Delete document
+router.delete('/delete-document/:filename', async (req, res) => {
+  try {
+    const fs = await import('fs/promises');
+    const path = await import('path');
+    const { filename } = req.params;
+
+    // Prevenir borrar archivos del sistema
+    if (filename.includes('..') || filename.includes('/') || filename.includes('\\')) {
+      return res.status(400).json({ 
+        error: 'Nombre de archivo inválido' 
+      });
+    }
+
+    const filePath = path.join(embeddingService.documentsPath, filename);
+    await fs.unlink(filePath);
+
+    res.json({ 
+      message: 'Documento eliminado correctamente',
+      filename 
+    });
+  } catch (error) {
+    console.error('Error deleting document:', error);
+    res.status(500).json({ 
+      error: 'Error deleting document',
+      details: error.message 
+    });
+  }
+});
+
+// Get custom instructions
+router.get('/custom-instructions', async (req, res) => {
+  try {
+    const fs = await import('fs/promises');
+    const path = await import('path');
+    
+    const instructionsPath = path.join(embeddingService.documentsPath, 'custom_instructions.txt');
+    
+    try {
+      const instructions = await fs.readFile(instructionsPath, 'utf-8');
+      res.json({ instructions });
+    } catch (error) {
+      // File doesn't exist yet
+      res.json({ instructions: '' });
+    }
+  } catch (error) {
+    console.error('Error getting custom instructions:', error);
+    res.status(500).json({ 
+      error: 'Error getting custom instructions',
+      details: error.message 
+    });
+  }
+});
+
+// Save custom instructions
+router.post('/custom-instructions', async (req, res) => {
+  try {
+    const fs = await import('fs/promises');
+    const path = await import('path');
+    const { instructions } = req.body;
+
+    const instructionsPath = path.join(embeddingService.documentsPath, 'custom_instructions.txt');
+    await fs.writeFile(instructionsPath, instructions, 'utf-8');
+
+    res.json({ message: 'Instrucciones guardadas correctamente' });
+  } catch (error) {
+    console.error('Error saving custom instructions:', error);
+    res.status(500).json({ 
+      error: 'Error saving custom instructions',
+      details: error.message 
     });
   }
 });

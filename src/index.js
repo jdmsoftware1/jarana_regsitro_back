@@ -19,6 +19,7 @@ import scheduleBreakRoutes from './routes/scheduleBreaks.js';
 import advancedBreakRoutes from './routes/advancedBreaks.js';
 import vacationRoutes from './routes/vacations.js';
 import aiRoutes from './routes/ai.js';
+import embeddingService from './services/embeddingService.js';
 
 dotenv.config();
 
@@ -99,6 +100,9 @@ async function startServer() {
     // Sync database models
     await sequelize.sync({ alter: true });
     console.log('✅ Database models synchronized.');
+    
+    // Initialize embedding service (loads documents from /knowledge)
+    await embeddingService.initialize();
     
     app.listen(PORT, () => {
       console.log(`🚀 Server running on port ${PORT}`);

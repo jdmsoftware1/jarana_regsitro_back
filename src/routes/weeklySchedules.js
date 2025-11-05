@@ -152,10 +152,12 @@ router.get('/employee/:employeeId/week/:year/:weekNumber', async (req, res) => {
 // Create weekly schedule (simple endpoint)
 router.post('/', async (req, res) => {
   try {
+    console.log('📅 Creating weekly schedule with data:', req.body);
     const { employeeId, templateId, weekStart, weekEnd, year, weekNumber, notes, createdBy } = req.body;
     
     // Validate required fields
     if (!employeeId || !year || !weekNumber) {
+      console.error('❌ Missing required fields:', { employeeId, year, weekNumber });
       return res.status(400).json({ 
         error: 'employeeId, year, and weekNumber are required' 
       });
@@ -180,10 +182,20 @@ router.post('/', async (req, res) => {
     // Calculate week dates if not provided
     let startDate = weekStart;
     let endDate = weekEnd;
+    
+    // If dates not provided, calculate them
     if (!startDate || !endDate) {
-      const dates = WeeklySchedule.getWeekDates(year, weekNumber);
-      startDate = dates.startDate;
-      endDate = dates.endDate;
+      try {
+        const dates = WeeklySchedule.getWeekDates(year, weekNumber);
+        startDate = dates.startDate;
+        endDate = dates.endDate;
+      } catch (error) {
+        console.error('Error calculating week dates:', error);
+        return res.status(400).json({ 
+          error: 'Invalid year or week number',
+          details: error.message 
+        });
+      }
     }
     
     // Check if weekly schedule already exists
@@ -193,6 +205,7 @@ router.post('/', async (req, res) => {
     
     if (weeklySchedule) {
       // Update existing
+      console.log('📝 Updating existing weekly schedule:', weeklySchedule.id);
       await weeklySchedule.update({
         templateId,
         startDate,
@@ -201,6 +214,7 @@ router.post('/', async (req, res) => {
       });
     } else {
       // Create new
+      console.log('✨ Creating new weekly schedule');
       weeklySchedule = await WeeklySchedule.create({
         employeeId,
         year,
@@ -211,6 +225,7 @@ router.post('/', async (req, res) => {
         notes,
         createdBy: createdBy || employeeId
       });
+      console.log('✅ Weekly schedule created:', weeklySchedule.id);
     }
     
     // Fetch complete weekly schedule with relations
@@ -233,13 +248,15 @@ router.post('/', async (req, res) => {
       ]
     });
     
-    res.status(201).json({
-      message: `Weekly schedule for week ${weekNumber}/${year} ${weeklySchedule.createdAt.getTime() === weeklySchedule.updatedAt.getTime() ? 'created' : 'updated'} successfully`,
-      data: completeWeeklySchedule
-    });
+    res.status(201).json({ data: completeWeeklySchedule });
   } catch (error) {
-    console.error('Create weekly schedule error:', error);
-    res.status(500).json({ error: 'Server error creating weekly schedule' });
+    console.error('❌ Create weekly schedule error:', error);
+    console.error('Error stack:', error.stack);
+    res.status(500).json({ 
+      error: 'Server error creating weekly schedule',
+      details: error.message,
+      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+    });
   }
 });
 

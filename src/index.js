@@ -46,15 +46,13 @@ app.use(cors(corsOptions));
 // Then helmet
 app.use(helmet());
 
-// Rate limiting (increased for development)
-const limiter = rateLimit({
-  windowMs: 1 * 60 * 1000, // 1 minute
-  max: 1000, // 1000 requests per minute (very permissive for development)
-  message: 'Too many requests from this IP, please try again later.',
-  standardHeaders: true,
-  legacyHeaders: false,
-});
-app.use(limiter);
+// Rate limiting DISABLED for development
+// const limiter = rateLimit({
+//   windowMs: 1 * 60 * 1000,
+//   max: 1000,
+//   message: 'Too many requests from this IP, please try again later.',
+// });
+// app.use(limiter);
 
 // Body parsers
 app.use(express.json({ limit: '10mb' }));

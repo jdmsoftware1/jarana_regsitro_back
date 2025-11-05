@@ -300,21 +300,33 @@ class AIService {
     }
     
     try {
-      // Get user context
-      const employee = await Employee.findByPk(userId);
+      // Get user context - userId should be numeric employee ID or UUID
+      let employee = null;
+      
+      // Try to find by numeric ID first
+      if (!isNaN(userId)) {
+        employee = await Employee.findByPk(parseInt(userId));
+      }
+      
+      // If not found, try as UUID
+      if (!employee && typeof userId === 'string') {
+        employee = await Employee.findByPk(userId);
+      }
+      
       if (!employee && userRole === 'employee') {
-        throw new Error('Empleado no encontrado');
+        throw new Error('Empleado no encontrado. Por favor, use el ID numérico del empleado.');
       }
 
       // Prepare context based on user role
       let context = '';
       
-      if (userRole === 'employee') {
-        // Get comprehensive employee data for AI context
+      if (userRole === 'employee' && employee) {
+        // Get comprehensive employee data for AI context using numeric employee ID
+        const employeeId = employee.id;
         const [recentRecords, allRecords, schedules, vacations, todayRecords] = await Promise.all([
           // Recent records for general context
           Record.findAll({
-            where: { employeeId: userId },
+            where: { employeeId },
             order: [['timestamp', 'DESC']],
             limit: 20,
             include: [{ model: Employee, as: 'employee', attributes: ['name', 'employeeCode'] }]
@@ -322,20 +334,20 @@ class AIService {
           
           // All records for comprehensive analysis
           Record.findAll({
-            where: { employeeId: userId },
+            where: { employeeId },
             order: [['timestamp', 'DESC']],
             limit: 100
           }),
           
           // Employee schedules
           Schedule.findAll({
-            where: { employeeId: userId },
+            where: { employeeId },
             order: [['dayOfWeek', 'ASC']]
           }),
           
           // All vacations
           Vacation.findAll({
-            where: { employeeId: userId },
+            where: { employeeId },
             order: [['startDate', 'DESC']],
             include: [{ 
               model: Employee, 
@@ -348,7 +360,7 @@ class AIService {
           // Today's records specifically
           Record.findAll({
             where: { 
-              employeeId: userId,
+              employeeId,
               timestamp: {
                 [Op.gte]: new Date(new Date().setHours(0, 0, 0, 0)),
                 [Op.lt]: new Date(new Date().setHours(23, 59, 59, 999))

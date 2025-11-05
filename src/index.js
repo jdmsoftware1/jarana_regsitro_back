@@ -11,26 +11,22 @@ import recordRoutes from './routes/records.js';
 import adminRoutes from './routes/admin.js';
 import kioskRoutes from './routes/kiosk.js';
 import scheduleRoutes from './routes/schedules.js';
+import scheduleTemplateRoutes from './routes/scheduleTemplates.js';
+import weeklyScheduleRoutes from './routes/weeklySchedules.js';
+import dailyExceptionRoutes from './routes/dailyExceptions.js';
+import advancedSchedulingRoutes from './routes/advancedScheduling.js';
+import scheduleBreakRoutes from './routes/scheduleBreaks.js';
+import advancedBreakRoutes from './routes/advancedBreaks.js';
 import vacationRoutes from './routes/vacations.js';
 import aiRoutes from './routes/ai.js';
+import embeddingService from './services/embeddingService.js';
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Rate limiting
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
-  message: 'Too many requests from this IP, please try again later.'
-});
-
-// Middleware
-app.use(helmet());
-app.use(limiter);
-
-// CORS configuration - Multiple origins for admin and kiosk
+// CORS configuration - Multiple origins for admin and kiosk (MUST BE BEFORE RATE LIMITING)
 const corsOptions = {
   origin: [
     process.env.FRONTEND_URL || 'http://localhost:5173', // Original frontend
@@ -45,7 +41,21 @@ const corsOptions = {
   optionsSuccessStatus: 200
 };
 
+// Apply CORS FIRST
 app.use(cors(corsOptions));
+
+// Then helmet
+app.use(helmet());
+
+// Rate limiting DISABLED for development
+// const limiter = rateLimit({
+//   windowMs: 1 * 60 * 1000,
+//   max: 1000,
+//   message: 'Too many requests from this IP, please try again later.',
+// });
+// app.use(limiter);
+
+// Body parsers
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
@@ -61,6 +71,12 @@ app.use('/api/records', recordRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/kiosk', kioskRoutes);
 app.use('/api/schedules', scheduleRoutes);
+app.use('/api/schedule-templates', scheduleTemplateRoutes);
+app.use('/api/weekly-schedules', weeklyScheduleRoutes);
+app.use('/api/daily-exceptions', dailyExceptionRoutes);
+app.use('/api/advanced-scheduling', advancedSchedulingRoutes);
+app.use('/api/schedule-breaks', scheduleBreakRoutes);
+app.use('/api/advanced-breaks', advancedBreakRoutes);
 app.use('/api/vacations', vacationRoutes);
 app.use('/api/ai', aiRoutes);
 
@@ -84,6 +100,9 @@ async function startServer() {
     // Sync database models
     await sequelize.sync({ alter: true });
     console.log('✅ Database models synchronized.');
+    
+    // Initialize embedding service (loads documents from /knowledge)
+    await embeddingService.initialize();
     
     app.listen(PORT, () => {
       console.log(`🚀 Server running on port ${PORT}`);

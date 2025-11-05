@@ -16,24 +16,19 @@ export const createRateLimiter = (windowMs, max, message) => {
   });
 };
 
-// Rate limiters específicos
+// Rate limiters específicos - DISABLED for development
+// Only login rate limit is kept for security
 export const loginRateLimit = createRateLimiter(
   15 * 60 * 1000, // 15 minutos
-  5, // 5 intentos
+  10, // 10 intentos (increased)
   'Demasiados intentos de login. Intenta de nuevo en 15 minutos.'
 );
 
-export const adminRateLimit = createRateLimiter(
-  15 * 60 * 1000, // 15 minutos
-  100, // 100 requests
-  'Límite de requests de admin excedido.'
-);
+// Admin rate limit DISABLED - no restrictions
+export const adminRateLimit = (req, res, next) => next();
 
-export const kioskRateLimit = createRateLimiter(
-  15 * 60 * 1000, // 15 minutos
-  50, // 50 requests
-  'Límite de requests de kiosk excedido.'
-);
+// Kiosk rate limit DISABLED - no restrictions
+export const kioskRateLimit = (req, res, next) => next();
 
 // Middleware de validación de origen
 export const validateOrigin = (allowedOrigins) => {

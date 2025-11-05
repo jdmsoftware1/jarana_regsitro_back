@@ -1,0 +1,350 @@
+# Guía de Uso del Sistema JARANA
+
+## Navegación Principal
+
+### Panel de Administración
+El sistema tiene las siguientes secciones principales:
+- Dashboard (Inicio)
+- Empleados
+- Registros
+- Horarios
+- Horarios Semanales
+- Vacaciones
+- Informes
+- Configuración
+
+## Gestión de Empleados
+
+### Ver Empleados
+1. Ir a la sección "Empleados" en el menú lateral
+2. Verás una lista con todos los empleados
+3. Puedes filtrar por estado (activo/inactivo)
+4. Usa la barra de búsqueda para encontrar empleados específicos
+
+### Crear Nuevo Empleado
+1. Ir a "Empleados"
+2. Hacer clic en el botón "Nuevo Empleado" (botón azul con icono +)
+3. Rellenar el formulario:
+   - Nombre completo
+   - Email (único)
+   - Código de empleado (único)
+   - PIN de 4 dígitos
+   - Rol (admin o employee)
+4. Hacer clic en "Guardar"
+
+### Editar Empleado
+1. Ir a "Empleados"
+2. Hacer clic en el icono de lápiz (editar) junto al empleado
+3. Modificar los campos necesarios
+4. Hacer clic en "Guardar Cambios"
+
+### Desactivar Empleado
+1. Ir a "Empleados"
+2. Hacer clic en el icono de papelera (eliminar)
+3. Confirmar la acción
+4. El empleado se marcará como inactivo (no se elimina de la base de datos)
+
+### Generar Código QR para Empleado
+1. Ir a "Empleados"
+2. Hacer clic en el icono de QR junto al empleado
+3. Se generará un código QR con el PIN del empleado
+4. Puedes descargarlo o imprimirlo
+
+## Gestión de Registros
+
+### Ver Registros
+1. Ir a "Registros" en el menú lateral
+2. Verás todos los registros de entrada/salida
+3. Puedes filtrar por:
+   - Empleado
+   - Fecha
+   - Tipo (entrada/salida)
+
+### Crear Registro Manual
+1. Ir a "Registros"
+2. Hacer clic en "Nuevo Registro"
+3. Seleccionar:
+   - Empleado
+   - Tipo (entrada o salida)
+   - Fecha y hora
+   - Dispositivo (opcional)
+   - Ubicación (opcional)
+   - Notas (opcional)
+4. Hacer clic en "Guardar"
+
+### Eliminar Registro
+1. Ir a "Registros"
+2. Hacer clic en el icono de papelera junto al registro
+3. Confirmar la eliminación
+
+## Gestión de Horarios
+
+### Ver Horarios Base
+1. Ir a "Horarios" en el menú lateral
+2. Verás los horarios base de cada empleado
+3. Muestra horario por día de la semana
+
+### Crear/Editar Horario Base
+1. Ir a "Horarios"
+2. Seleccionar un empleado del dropdown
+3. Configurar para cada día:
+   - Marcar si es día laborable
+   - Hora de entrada
+   - Hora de salida
+   - Pausas (inicio y fin)
+4. Hacer clic en "Guardar Horario"
+
+### Gestionar Plantillas de Horarios
+1. Ir a "Horarios Semanales"
+2. Hacer clic en "Gestionar Plantillas"
+3. Verás todas las plantillas disponibles
+
+#### Crear Nueva Plantilla
+1. En el modal de plantillas, hacer clic en "Nueva Plantilla"
+2. Rellenar:
+   - Nombre de la plantilla (ej: "Turno Mañana")
+   - Descripción (opcional)
+3. Configurar horario para cada día de la semana
+4. Hacer clic en "Guardar Plantilla"
+
+#### Editar Plantilla
+1. En el modal de plantillas, hacer clic en el icono de lápiz
+2. Modificar los campos necesarios
+3. Hacer clic en "Guardar Cambios"
+
+#### Eliminar Plantilla
+1. En el modal de plantillas, hacer clic en el icono de papelera
+2. Confirmar la eliminación
+
+#### Aplicar Plantilla a Empleados
+1. En el modal de plantillas, hacer clic en "Aplicar a Empleados" en la plantilla deseada
+2. Seleccionar fecha de inicio
+3. (Opcional) Marcar "Aplicar a múltiples semanas consecutivas" y seleccionar fecha de fin
+4. Seleccionar los empleados a los que aplicar
+5. Hacer clic en "Aplicar a X empleado(s)"
+
+### Gestionar Pausas en Plantillas
+1. En el modal de plantillas, hacer clic en "Gestionar Pausas" en la plantilla deseada
+2. Seleccionar el día de la semana
+3. Hacer clic en "Añadir Pausa"
+4. Configurar:
+   - Hora de inicio
+   - Hora de fin
+   - Tipo de pausa (pagada/no pagada)
+5. Hacer clic en "Guardar Pausas"
+
+## Gestión de Horarios Semanales
+
+### Ver Horarios Semanales
+1. Ir a "Horarios Semanales" en el menú lateral
+2. Seleccionar un empleado del dropdown
+3. Verás todos sus horarios semanales asignados
+
+### Asignar Horario Semanal
+1. Ir a "Horarios Semanales"
+2. Seleccionar un empleado
+3. Hacer clic en "Asignar Horario Semanal"
+4. Seleccionar:
+   - Plantilla de horario
+   - Fecha (cualquier día de la semana, se calculará automáticamente lunes-domingo)
+   - (Opcional) Marcar "Aplicar a múltiples semanas" y seleccionar fecha de fin
+5. Hacer clic en "Asignar Horario"
+
+### Crear Horario Personalizado
+1. Ir a "Horarios Semanales"
+2. Seleccionar un empleado
+3. Hacer clic en "Horario Personalizado"
+4. Seleccionar semana
+5. Configurar horario día por día
+6. Añadir pausas si es necesario
+7. Hacer clic en "Guardar Horario Personalizado"
+
+### Copiar Horario Semanal a Otros Empleados
+1. Ir a "Horarios Semanales"
+2. Seleccionar un empleado que ya tenga un horario asignado
+3. En la tabla de horarios, hacer clic en el icono de "Copiar" (📋)
+4. Seleccionar los empleados destino
+5. Hacer clic en "Copiar a X empleado(s)"
+6. El mismo horario se aplicará a los empleados seleccionados para la misma semana
+
+### Eliminar Horario Semanal
+1. Ir a "Horarios Semanales"
+2. Seleccionar un empleado
+3. Hacer clic en el icono de papelera junto al horario
+4. Confirmar la eliminación
+
+## Gestión de Vacaciones
+
+### Ver Vacaciones
+1. Ir a "Vacaciones" en el menú lateral
+2. Verás todas las solicitudes de vacaciones
+3. Puedes filtrar por:
+   - Estado (pendiente/aprobada/rechazada)
+   - Empleado
+   - Fechas
+
+### Solicitar Vacaciones (como empleado)
+1. Ir a "Vacaciones"
+2. Hacer clic en "Solicitar Vacaciones"
+3. Rellenar:
+   - Fecha de inicio
+   - Fecha de fin
+   - Tipo (vacaciones/baja médica/permiso personal)
+   - Razón
+   - Notas (opcional)
+4. Hacer clic en "Enviar Solicitud"
+
+### Aprobar Vacaciones (como administrador)
+RUTA: Vacaciones → Aprobar
+1. Ir a "Vacaciones"
+2. Buscar la solicitud con estado "Pendiente"
+3. Hacer clic en el botón "Aprobar" (botón verde con ✓)
+4. Confirmar la aprobación
+5. El estado cambiará a "Aprobada"
+
+### Rechazar Vacaciones (como administrador)
+RUTA: Vacaciones → Rechazar
+1. Ir a "Vacaciones"
+2. Buscar la solicitud con estado "Pendiente"
+3. Hacer clic en el botón "Rechazar" (botón rojo con ✗)
+4. (Opcional) Añadir una nota explicando el rechazo
+5. Confirmar el rechazo
+6. El estado cambiará a "Rechazada"
+
+### Eliminar Solicitud de Vacaciones
+1. Ir a "Vacaciones"
+2. Hacer clic en el icono de papelera junto a la solicitud
+3. Confirmar la eliminación
+
+## Informes y Reportes
+
+### Informe de Cumplimiento
+1. Ir a "Informes" en el menú lateral
+2. Hacer clic en "Informe de Cumplimiento"
+3. Seleccionar:
+   - Fecha de inicio
+   - Fecha de fin
+   - (Opcional) Empleado específico
+4. Hacer clic en "Generar Informe"
+5. El informe mostrará:
+   - Llegadas tarde
+   - Salidas anticipadas
+   - Días trabajados
+   - Horas totales
+   - Porcentaje de cumplimiento
+
+### Exportar Informe
+1. Generar el informe deseado
+2. Hacer clic en el botón "Exportar" o "Descargar"
+3. Seleccionar formato (PDF/Excel)
+4. El archivo se descargará automáticamente
+
+### Ver Estadísticas del Dashboard
+1. Ir a "Dashboard" (página de inicio)
+2. Verás tarjetas con:
+   - Total de empleados
+   - Registros de hoy
+   - Vacaciones pendientes
+   - Empleados activos
+3. Gráficos de:
+   - Registros por día
+   - Distribución de horarios
+   - Estado de vacaciones
+
+## Vista Semanal
+
+### Acceder a Vista Semanal
+1. Desde cualquier sección, hacer clic en "Vista Semanal" en el menú
+2. O ir directamente a la URL /weekly-view
+
+### Navegar por Semanas
+1. Usa las flechas "< >" para cambiar de semana
+2. Usa el botón "Hoy" para volver a la semana actual
+3. Selecciona una fecha específica con el selector de fecha
+
+### Ver Horario de un Empleado en la Semana
+1. En la vista semanal, busca al empleado en la lista
+2. Verás su horario para cada día de la semana
+3. Los colores indican:
+   - Verde: Horario normal
+   - Amarillo: Horario semanal específico
+   - Rojo: Vacaciones
+   - Gris: Día no laborable
+
+## Configuración
+
+### Cambiar Contraseña
+1. Ir a "Configuración"
+2. Hacer clic en "Cambiar Contraseña"
+3. Ingresar:
+   - Contraseña actual
+   - Nueva contraseña
+   - Confirmar nueva contraseña
+4. Hacer clic en "Guardar"
+
+### Configurar Notificaciones
+1. Ir a "Configuración"
+2. Sección "Notificaciones"
+3. Activar/desactivar:
+   - Notificaciones de llegadas tarde
+   - Notificaciones de vacaciones pendientes
+   - Notificaciones de registros
+4. Hacer clic en "Guardar Preferencias"
+
+## Atajos de Teclado
+
+- `Ctrl + K`: Búsqueda rápida
+- `Ctrl + N`: Nuevo elemento (según la sección actual)
+- `Ctrl + S`: Guardar (en formularios)
+- `Esc`: Cerrar modal
+- `F5`: Recargar datos
+
+## Solución de Problemas Comunes
+
+### No puedo ver los registros de un empleado
+1. Verifica que el empleado esté activo
+2. Verifica que el rango de fechas sea correcto
+3. Actualiza la página (F5)
+
+### No aparece el horario semanal
+1. Verifica que el empleado tenga un horario asignado para esa semana
+2. Si no tiene horario semanal, se mostrará el horario base
+3. Durante vacaciones, se mostrará "Vacaciones"
+
+### Error al aprobar vacaciones
+1. Verifica que la solicitud esté en estado "Pendiente"
+2. Verifica que no haya conflictos con otras vacaciones
+3. Verifica tu rol (debes ser administrador)
+
+### No puedo crear un empleado
+1. Verifica que el email sea único
+2. Verifica que el código de empleado sea único
+3. Verifica que el PIN tenga exactamente 4 dígitos
+4. Todos los campos obligatorios deben estar completos
+
+## Mejores Prácticas
+
+### Para Administradores
+1. Revisa las solicitudes de vacaciones diariamente
+2. Mantén actualizados los horarios semanales
+3. Revisa el informe de cumplimiento semanalmente
+4. Mantén activos solo a los empleados actuales
+
+### Para Empleados
+1. Registra tu entrada/salida puntualmente
+2. Solicita vacaciones con anticipación (mínimo 15 días)
+3. Verifica tu horario semanal regularmente
+4. Reporta cualquier error en tus registros inmediatamente
+
+## Contacto y Soporte
+
+Si tienes problemas técnicos:
+1. Intenta recargar la página (F5)
+2. Cierra sesión y vuelve a iniciar
+3. Limpia la caché del navegador
+4. Contacta al administrador del sistema
+
+Si necesitas ayuda con el uso:
+1. Consulta esta guía
+2. Usa el chat de IA del sistema
+3. Contacta a RRHH o al administrador

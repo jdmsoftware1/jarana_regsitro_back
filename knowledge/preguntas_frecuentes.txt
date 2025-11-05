@@ -1,0 +1,311 @@
+# Preguntas Frecuentes - Sistema JARANA
+
+## Gestión de Vacaciones
+
+### ¿Cómo aprobar vacaciones?
+INSTRUCCIÓN ESPECÍFICA:
+1. Ve a la sección "Vacaciones" en el menú lateral
+2. Busca la solicitud con estado "Pendiente" (badge amarillo)
+3. Haz clic en el botón verde "Aprobar" (✓) junto a la solicitud
+4. Confirma la aprobación en el diálogo
+5. La solicitud cambiará a estado "Aprobada" (badge verde)
+
+RUTA: Vacaciones → Aprobar (botón verde con ✓)
+
+### ¿Cómo rechazar vacaciones?
+INSTRUCCIÓN ESPECÍFICA:
+1. Ve a "Vacaciones"
+2. Encuentra la solicitud pendiente
+3. Haz clic en el botón rojo "Rechazar" (✗)
+4. Opcionalmente añade una nota explicando el motivo
+5. Confirma el rechazo
+
+RUTA: Vacaciones → Rechazar (botón rojo con ✗)
+
+### ¿Puedo aprobar vacaciones retroactivas?
+Sí, puedes aprobar vacaciones con fechas pasadas, pero se recomienda revisar si hay registros de asistencia en esas fechas que puedan entrar en conflicto.
+
+### ¿Qué pasa si hay registros durante las vacaciones aprobadas?
+El sistema prioriza las vacaciones. En la vista semanal se mostrará "Vacaciones" aunque haya registros. Se recomienda eliminar registros erróneos durante períodos de vacaciones.
+
+## Gestión de Horarios
+
+### ¿Cómo asignar un horario a un empleado nuevo?
+INSTRUCCIÓN ESPECÍFICA:
+Opción 1 - Horario Base:
+1. Ve a "Horarios"
+2. Selecciona el empleado del dropdown
+3. Configura el horario para cada día
+4. Haz clic en "Guardar Horario"
+
+Opción 2 - Usar Plantilla:
+1. Ve a "Horarios Semanales"
+2. Haz clic en "Gestionar Plantillas"
+3. Selecciona una plantilla existente
+4. Haz clic en "Aplicar a Empleados"
+5. Selecciona las fechas y el empleado
+6. Haz clic en "Aplicar"
+
+### ¿Cómo copiar el horario de un empleado a otro?
+INSTRUCCIÓN ESPECÍFICA:
+1. Ve a "Horarios Semanales"
+2. Selecciona el empleado que tiene el horario que quieres copiar
+3. En la tabla de horarios semanales, busca la semana deseada
+4. Haz clic en el icono de "Copiar" (📋) en esa fila
+5. Se abrirá un modal mostrando el horario a copiar
+6. Selecciona los empleados destino (puedes seleccionar múltiples)
+7. Haz clic en "Copiar a X empleado(s)"
+8. El horario se copiará con las mismas fechas
+
+RUTA: Horarios Semanales → Seleccionar empleado → Icono Copiar (📋)
+
+### ¿Cómo aplicar una plantilla a múltiples empleados?
+INSTRUCCIÓN ESPECÍFICA:
+1. Ve a "Horarios Semanales"
+2. Haz clic en "Gestionar Plantillas"
+3. Busca la plantilla que quieres aplicar
+4. Haz clic en "Aplicar a Empleados" en esa plantilla
+5. Selecciona la fecha de inicio
+6. Marca "Aplicar a múltiples semanas consecutivas" si quieres aplicarla a varias semanas
+7. Selecciona la fecha de fin (si aplica)
+8. Selecciona todos los empleados (puedes usar "Seleccionar todos")
+9. Haz clic en "Aplicar a X empleado(s)"
+
+RUTA: Horarios Semanales → Gestionar Plantillas → Aplicar a Empleados
+
+### ¿Qué diferencia hay entre horario base y horario semanal?
+- **Horario Base**: Es el horario predeterminado del empleado, se aplica todas las semanas si no hay horario semanal específico
+- **Horario Semanal**: Es un horario específico para una semana concreta, tiene prioridad sobre el horario base
+- **Prioridad**: Vacaciones > Horario Semanal > Horario Base
+
+### ¿Cómo crear un horario personalizado para una semana específica?
+INSTRUCCIÓN ESPECÍFICA:
+1. Ve a "Horarios Semanales"
+2. Selecciona el empleado
+3. Haz clic en "Horario Personalizado"
+4. Selecciona la semana (cualquier día, se calculará lunes-domingo automáticamente)
+5. Configura cada día individualmente:
+   - Marca si es día laborable
+   - Establece hora de entrada y salida
+   - Añade pausas si es necesario
+6. Haz clic en "Guardar Horario Personalizado"
+
+RUTA: Horarios Semanales → Horario Personalizado
+
+## Gestión de Empleados
+
+### ¿Cómo crear un nuevo empleado?
+INSTRUCCIÓN ESPECÍFICA:
+1. Ve a "Empleados"
+2. Haz clic en el botón "Nuevo Empleado" (botón azul con +)
+3. Rellena el formulario:
+   - Nombre completo (obligatorio)
+   - Email único (obligatorio)
+   - Código de empleado único (obligatorio)
+   - PIN de 4 dígitos (obligatorio)
+   - Rol: admin o employee
+4. Haz clic en "Guardar"
+
+RUTA: Empleados → Nuevo Empleado (botón +)
+
+### ¿Cómo generar un código QR para un empleado?
+INSTRUCCIÓN ESPECÍFICA:
+1. Ve a "Empleados"
+2. Busca el empleado en la lista
+3. Haz clic en el icono de QR (📱) junto al nombre del empleado
+4. Se generará un código QR con el PIN del empleado
+5. Puedes descargarlo o imprimirlo
+6. El empleado puede escanear este QR para registrar entrada/salida
+
+RUTA: Empleados → Icono QR (📱)
+
+### ¿Cómo desactivar un empleado que ya no trabaja?
+INSTRUCCIÓN ESPECÍFICA:
+1. Ve a "Empleados"
+2. Busca el empleado en la lista
+3. Haz clic en el icono de papelera (🗑️)
+4. Confirma la acción
+5. El empleado se marcará como "Inactivo" (no se elimina de la base de datos)
+6. Ya no aparecerá en las listas activas pero sus registros históricos se conservan
+
+RUTA: Empleados → Icono Papelera (🗑️)
+
+## Gestión de Registros
+
+### ¿Cómo crear un registro manual?
+INSTRUCCIÓN ESPECÍFICA:
+1. Ve a "Registros"
+2. Haz clic en "Nuevo Registro"
+3. Selecciona el empleado del dropdown
+4. Selecciona el tipo: "Entrada" o "Salida"
+5. Selecciona fecha y hora
+6. (Opcional) Añade dispositivo, ubicación y notas
+7. Haz clic en "Guardar"
+
+RUTA: Registros → Nuevo Registro
+
+### ¿Cómo corregir un registro erróneo?
+INSTRUCCIÓN ESPECÍFICA:
+1. Ve a "Registros"
+2. Busca el registro erróneo (usa filtros si es necesario)
+3. Haz clic en el icono de papelera (🗑️) para eliminarlo
+4. Crea un nuevo registro con los datos correctos usando "Nuevo Registro"
+
+RUTA: Registros → Eliminar registro erróneo → Crear nuevo
+
+### ¿Puedo ver los registros de un empleado específico?
+Sí, en la sección "Registros" usa el filtro de empleado en la parte superior para ver solo los registros de ese empleado.
+
+## Informes
+
+### ¿Cómo generar un informe de cumplimiento?
+INSTRUCCIÓN ESPECÍFICA:
+1. Ve a "Informes"
+2. Haz clic en "Informe de Cumplimiento"
+3. Selecciona el rango de fechas (inicio y fin)
+4. (Opcional) Selecciona un empleado específico o deja en blanco para todos
+5. Haz clic en "Generar Informe"
+6. El informe mostrará:
+   - Llegadas tarde (con detalle de minutos)
+   - Salidas anticipadas
+   - Días trabajados vs días esperados
+   - Horas totales trabajadas
+   - Porcentaje de cumplimiento
+
+RUTA: Informes → Informe de Cumplimiento
+
+### ¿Cómo exportar un informe?
+INSTRUCCIÓN ESPECÍFICA:
+1. Genera el informe que deseas exportar
+2. Haz clic en el botón "Exportar" o "Descargar" (generalmente en la esquina superior derecha)
+3. Selecciona el formato: PDF o Excel
+4. El archivo se descargará automáticamente
+
+RUTA: Informes → Generar informe → Exportar
+
+### ¿Qué es el porcentaje de cumplimiento?
+El porcentaje de cumplimiento se calcula como:
+- (Días trabajados correctamente / Días laborables esperados) × 100
+- Un día se considera "correcto" si no hay llegadas tarde ni salidas anticipadas
+- Las vacaciones aprobadas no afectan negativamente el cumplimiento
+
+## Plantillas de Horarios
+
+### ¿Cómo crear una plantilla de horario?
+INSTRUCCIÓN ESPECÍFICA:
+1. Ve a "Horarios Semanales"
+2. Haz clic en "Gestionar Plantillas"
+3. Haz clic en "Nueva Plantilla"
+4. Rellena:
+   - Nombre descriptivo (ej: "Turno Mañana", "Turno Tarde")
+   - Descripción (opcional)
+5. Configura el horario para cada día de la semana:
+   - Marca si es día laborable
+   - Establece hora de entrada y salida
+6. Haz clic en "Guardar Plantilla"
+
+RUTA: Horarios Semanales → Gestionar Plantillas → Nueva Plantilla
+
+### ¿Cómo añadir pausas a una plantilla?
+INSTRUCCIÓN ESPECÍFICA:
+1. Ve a "Horarios Semanales"
+2. Haz clic en "Gestionar Plantillas"
+3. Busca la plantilla
+4. Haz clic en "Gestionar Pausas" en esa plantilla
+5. Selecciona el día de la semana
+6. Haz clic en "Añadir Pausa"
+7. Configura:
+   - Hora de inicio de la pausa
+   - Hora de fin de la pausa
+   - Tipo: pagada o no pagada
+8. Puedes añadir múltiples pausas al mismo día
+9. Haz clic en "Guardar Pausas"
+
+RUTA: Horarios Semanales → Gestionar Plantillas → Gestionar Pausas
+
+### ¿Puedo editar una plantilla que ya está en uso?
+Sí, puedes editar una plantilla en cualquier momento. Los cambios NO afectarán a los horarios semanales ya asignados, solo a las nuevas asignaciones.
+
+### ¿Cómo eliminar una plantilla?
+INSTRUCCIÓN ESPECÍFICA:
+1. Ve a "Horarios Semanales"
+2. Haz clic en "Gestionar Plantillas"
+3. Busca la plantilla que quieres eliminar
+4. Haz clic en el icono de papelera (🗑️)
+5. Confirma la eliminación
+6. NOTA: No puedes eliminar plantillas que estén actualmente asignadas a empleados
+
+RUTA: Horarios Semanales → Gestionar Plantillas → Icono Papelera (🗑️)
+
+## Vista Semanal
+
+### ¿Cómo ver el horario de todos los empleados en una semana?
+INSTRUCCIÓN ESPECÍFICA:
+1. Haz clic en "Vista Semanal" en el menú
+2. Usa las flechas < > para navegar entre semanas
+3. O haz clic en "Hoy" para ver la semana actual
+4. Verás una tabla con todos los empleados y su horario para cada día
+5. Los colores indican:
+   - Verde: Horario normal
+   - Amarillo: Horario semanal específico
+   - Rojo: Vacaciones
+   - Gris: Día no laborable
+
+RUTA: Vista Semanal
+
+## Problemas Comunes
+
+### "No puedo aprobar vacaciones"
+Posibles causas:
+1. No tienes rol de administrador
+2. La solicitud ya fue aprobada/rechazada
+3. Hay un conflicto con otras vacaciones del mismo empleado
+Solución: Verifica tu rol y el estado de la solicitud
+
+### "No aparece el horario del empleado"
+Posibles causas:
+1. El empleado no tiene horario base ni horario semanal asignado
+2. Estás viendo una semana sin horario específico
+Solución: Asigna un horario base o un horario semanal
+
+### "El informe muestra llegadas tarde incorrectas"
+Posibles causas:
+1. El horario del empleado cambió y no se actualizó
+2. Hay registros duplicados
+3. El horario semanal no está configurado correctamente
+Solución: Verifica el horario asignado para las fechas del informe
+
+### "No puedo crear un empleado con ese email"
+Causa: El email ya existe en el sistema
+Solución: Usa un email diferente o verifica si el empleado ya existe
+
+## Consejos y Mejores Prácticas
+
+### Para Administradores
+1. Revisa las vacaciones pendientes diariamente (ve a Vacaciones y filtra por "Pendiente")
+2. Crea plantillas de horarios para los turnos más comunes
+3. Usa "Copiar horario" cuando varios empleados tienen el mismo horario
+4. Genera informes de cumplimiento semanalmente
+5. Mantén actualizados los horarios semanales con anticipación
+
+### Para Gestión de Horarios
+1. Planifica los horarios semanales con al menos 1 semana de anticipación
+2. Usa plantillas para agilizar la asignación
+3. Revisa la vista semanal para verificar que todos tienen horario
+4. Comunica los cambios de horario a los empleados
+
+### Para Control de Asistencia
+1. Revisa los registros diariamente
+2. Corrige registros erróneos inmediatamente
+3. Verifica que cada empleado tenga entrada y salida cada día
+4. Usa el informe de cumplimiento para detectar patrones
+
+## Glosario
+
+- **Horario Base**: Horario predeterminado del empleado
+- **Horario Semanal**: Horario específico para una semana
+- **Plantilla**: Horario reutilizable que se puede aplicar a múltiples empleados
+- **Registro**: Entrada o salida de un empleado
+- **Cumplimiento**: Porcentaje de días trabajados correctamente
+- **Pausa**: Descanso durante la jornada laboral
+- **QR**: Código de respuesta rápida para registro automático
